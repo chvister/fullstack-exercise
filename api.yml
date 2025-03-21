@@ -88,9 +88,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
                 items:
-                  $ref: "#/components/schemas/Article"
+                  $ref: "#/components/schemas/ArticleList"
         "401":
           $ref: "#/components/responses/ApiKeyInvalidError"
 
