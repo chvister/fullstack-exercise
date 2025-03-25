@@ -1,24 +1,57 @@
 import React from "react";
 import { AppProps } from "next/app";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  // MutationCache,
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { initializeAPIClient } from "@/lib/api-client";
 import { MainLayout } from "@/components/layout/MainLayout";
 import "@/styles/globals.css";
 import Head from "next/head";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryClient = new QueryClient();
+import { Toaster, toast } from "react-hot-toast";
+import { AuthProvider } from "@/context/AuthContext";
+
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => toast.error(`${error.message}`),
+  }),
+  // mutationCache: new MutationCache({
+  //   onError: (error) => toast.error(`${error.message}`),
+  // }),
+});
 
 initializeAPIClient();
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <MainLayout>
-        <Head>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Component {...pageProps} />
-      </MainLayout>
+      <AuthProvider>
+        <MainLayout>
+          <Head>
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <Component {...pageProps} />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              duration: 4000,
+              error: {
+                icon: "❌",
+                style: {
+                  background: "#fee2e2",
+                  color: "#dc2626",
+                },
+              },
+            }}
+          />{" "}
+        </MainLayout>
+
+        <ReactQueryDevtools initialIsOpen={false} />
+      </AuthProvider>
     </QueryClientProvider>
   );
 };
