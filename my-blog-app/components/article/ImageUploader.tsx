@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useUploadImage } from "@/hooks/useUploadImage";
 import { LoadingSpinner } from "../LoadingSpinner";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 interface ImageUploaderProps {
   onImageUploaded?: (imageId: string) => void;
@@ -13,10 +14,12 @@ const ImageUploader = ({ onImageUploaded }: ImageUploaderProps) => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
+    if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
       mutation.mutate(file);
+    } else {
+      toast.error("Invalid file type. Please upload a PNG or JPEG image.");
     }
   };
 

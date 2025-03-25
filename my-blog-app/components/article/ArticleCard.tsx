@@ -1,39 +1,35 @@
 import Link from "next/link";
 import { format } from "date-fns";
 import { useFetchImage } from "@/hooks/useFetchImage";
-import { useEffect, useState } from "react";
-import Image from "next/image";
 import { Article } from "@/generated-api";
+import { SkeletonLoader } from "../SkeletonLoader";
+import { useEffect } from "react";
 
 interface ArticleCardProps {
   article: Article;
 }
 
 const ArticleCard = ({ article }: ArticleCardProps) => {
-  const fetchImageMutation = useFetchImage();
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const { data: imageUrl, isPending } = useFetchImage(article?.imageId);
   const formattedDate = article.createdAt
     ? format(new Date(article.createdAt), "MM/dd/yy HH:mm")
     : "Unknown date";
 
   useEffect(() => {
-    if (article.imageId) {
-      fetchImageMutation.mutate(article.imageId);
-    }
-  }, [article.imageId]);
-
-  useEffect(() => {
-    if (fetchImageMutation.isSuccess && fetchImageMutation.data) {
-      setImageUrl(fetchImageMutation.data);
-    }
-  }, [fetchImageMutation.isSuccess, fetchImageMutation.data]);
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+    };
+  }, [imageUrl]);
 
   return (
     <div className="flex items-start gap-4 py-4 border-b border-gray-200 last:border-b-0">
       {article.imageId && (
         <div className="w-32 h-32 flex-shrink-0">
+          {isPending && <SkeletonLoader />}
           {imageUrl && (
-            <Image
+            <img
               src={imageUrl}
               alt={article.title ?? "Article image"}
               className="w-full h-full object-cover rounded"
