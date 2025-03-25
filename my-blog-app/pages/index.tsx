@@ -1,13 +1,9 @@
 import ArticleCard from "@/components/article/ArticleCard";
 import { SkeletonLoader } from "@/components/SkeletonLoader";
-import { ArticleList, BlogService } from "@/generated-api";
-import { useQuery } from "@tanstack/react-query";
+import { useFetchArticles } from "@/hooks/useArticles";
 
 export default function ArticlePage() {
-  const { isLoading, data: articles } = useQuery<ArticleList>({
-    queryKey: ["articles"],
-    queryFn: () => BlogService.listArticles(),
-  });
+  const { data: articles, isLoading } = useFetchArticles();
 
   return (
     <div className="max-w-4xl mx-auto p-6">
