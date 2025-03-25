@@ -56,7 +56,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setAccessToken(data);
     setError(null);
     toast.success("Login successful");
-    router.push("/admin/articles");
   };
 
   const onError = (error: Error) => {
@@ -82,7 +81,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     authStorage.clear();
     setAccessToken(null);
     setError(null);
-  }, []);
+    router.push("/");
+  }, [router]);
 
   const value = useMemo(
     () => ({

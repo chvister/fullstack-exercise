@@ -1,3 +1,5 @@
+import { withAuth } from "@/utils/hocs/withAuth";
+
 const AdminArticlesPage = () => {
   return (
     <div>
@@ -6,4 +8,4 @@ const AdminArticlesPage = () => {
   );
 };
 
-export default AdminArticlesPage;
+export default withAuth(AdminArticlesPage);
