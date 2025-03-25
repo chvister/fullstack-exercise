@@ -1,16 +1,15 @@
 import Link from "next/link";
 import { format } from "date-fns";
-import { useFetchImage } from "@/hooks/useFetchImage";
 import { Article } from "@/generated-api";
-import { SkeletonLoader } from "../SkeletonLoader";
 import { useEffect } from "react";
+import Image from "next/image";
 
 interface ArticleCardProps {
   article: Article;
 }
 
 const ArticleCard = ({ article }: ArticleCardProps) => {
-  const { data: imageUrl, isPending } = useFetchImage(article?.imageId);
+  const imageUrl = article.imageId ? `/api/images/${article.imageId}` : null;
   const formattedDate = article.createdAt
     ? format(new Date(article.createdAt), "MM/dd/yy HH:mm")
     : "Unknown date";
@@ -27,9 +26,8 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
     <div className="flex items-start gap-4 py-4 border-b border-gray-200 last:border-b-0">
       {article.imageId && (
         <div className="w-32 h-32 flex-shrink-0">
-          {isPending && <SkeletonLoader />}
           {imageUrl && (
-            <img
+            <Image
               src={imageUrl}
               alt={article.title ?? "Article image"}
               className="w-full h-full object-cover rounded"
@@ -58,7 +56,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
         </p>
 
         <Link
-          href={`/articles/${article.articleId}`}
+          href={`/article/${article.articleId}`}
           className="text-blue-600 hover:text-blue-800 text-sm transition-colors"
         >
           Read whole article
