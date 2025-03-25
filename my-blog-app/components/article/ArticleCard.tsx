@@ -42,7 +42,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
       <div className="flex-1">
         <h3 className="text-lg font-bold text-gray-900 mb-1">
           <Link
-            href={`/articles/${article.articleId}`}
+            href={`/article/${article.articleId}`}
             className="hover:text-blue-600 transition-colors"
           >
             {article.title}
