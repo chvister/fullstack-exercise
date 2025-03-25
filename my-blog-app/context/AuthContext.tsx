@@ -1,4 +1,4 @@
-import { AccessToken, AuthenticationService } from "@/generated-api";
+import { AccessToken, AuthenticationService, OpenAPI } from "@/generated-api";
 import { useMutation } from "@tanstack/react-query";
 import {
   createContext,
@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     authStorage.set(data);
     setAccessToken(data);
     setError(null);
+    OpenAPI.TOKEN = data?.access_token;
     toast.success("Login successful");
   };
 
@@ -63,6 +64,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setAccessToken(null);
     setError(null);
     console.error("Login failed:", error.message);
+    OpenAPI.TOKEN = undefined;
     toast.error(`Login failed ${error.message}`);
   };
 
