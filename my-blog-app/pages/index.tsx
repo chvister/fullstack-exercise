@@ -10,8 +10,8 @@ export default function ArticlePage() {
   });
 
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="text-xl font-bold my-8">Latest Articles</h1>
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">Latest article</h1>
       <div className="grid gap-6">
         <div className="relative">
           {isLoading && (
