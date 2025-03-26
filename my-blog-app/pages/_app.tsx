@@ -8,6 +8,8 @@ import {
 } from "@tanstack/react-query";
 import { initializeAPIClient } from "@/lib/api-client";
 import { MainLayout } from "@/components/layout/MainLayout";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
 import "@/styles/globals.css";
 import Head from "next/head";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";

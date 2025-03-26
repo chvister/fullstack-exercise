@@ -4,7 +4,12 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { SkeletonLoader } from "@/components/SkeletonLoader";
 import { useArticleDetail } from "@/hooks/useArticleDetail";
-import MDEditor from "@uiw/react-md-editor";
+import dynamic from "next/dynamic";
+
+const MDEditor = dynamic(
+  () => import("@uiw/react-md-editor").then((mod) => mod.default.Markdown),
+  { ssr: false }
+);
 
 const ArticleDetailPage = () => {
   const router = useRouter();
@@ -36,7 +41,7 @@ const ArticleDetailPage = () => {
             />
           )}
 
-          <MDEditor.Markdown
+          <MDEditor
             className="prose mt-6"
             source={article.content}
             style={{ whiteSpace: "pre-wrap" }}

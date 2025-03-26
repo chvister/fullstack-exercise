@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import MDEditor from "@uiw/react-md-editor";
 import { z } from "zod";
 import { articleSchema } from "@/utils/schemas/articleSchema";
 import ImageUploader from "./ImageUploader";
@@ -8,7 +7,12 @@ import { ArticleDetail } from "@/generated-api";
 import PreviewImage from "./PreviewImage";
 import { useDeleteImage } from "@/hooks/useDeleteImage";
 import { useCallback } from "react";
+import dynamic from "next/dynamic";
 
+const MDEditor = dynamic(
+  () => import("@uiw/react-md-editor").then((mod) => mod.default),
+  { ssr: false }
+);
 type ArticleFormData = z.infer<typeof articleSchema>;
 
 interface EditArticleFormProps {
