@@ -8,7 +8,7 @@ import MDEditor from "@uiw/react-md-editor";
 
 const ArticleDetailPage = () => {
   const router = useRouter();
-  const { id: articleId } = router.query;
+  const { articleId } = router.query;
   const { data: article, isLoading } = useArticleDetail(articleId as string);
 
   // Format the date

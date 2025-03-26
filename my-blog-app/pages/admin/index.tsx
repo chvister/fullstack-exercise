@@ -1,4 +1,5 @@
 import ArticlesTable from "@/components/article/ArticlesTable";
+import { withAuth } from "@/utils/hocs/withAuth";
 
 const ArticlesPage = () => {
   return (
@@ -9,4 +10,4 @@ const ArticlesPage = () => {
   );
 };
 
-export default ArticlesPage;
+export default withAuth(ArticlesPage);

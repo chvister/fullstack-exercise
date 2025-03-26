@@ -31,7 +31,7 @@ const Navbar = ({
         {isAuthenticated ? (
           <>
             <Link href="/admin">My Articles</Link>
-            <Link href="/admin/create-article">Create Article</Link>
+            <Link href="/admin/create">Create Article</Link>
             <button
               onClick={logout}
               className={`${navButtonStyles} bg-blue-500 text-white hover:bg-blue-600`}
