@@ -1,9 +1,17 @@
 import ArticleCard from "@/components/article/ArticleCard";
+import ArticlePagination from "@/components/article/ArticlePagination";
 import { SkeletonLoader } from "@/components/SkeletonLoader";
 import { useFetchArticles } from "@/hooks/useArticles";
+import { usePagination } from "@/hooks/usePagination";
+
+const TOTAL_PAGE = 2;
 
 export default function ArticlePage() {
-  const { data: articles, isLoading } = useFetchArticles();
+  const { currentPage, nextPage, prevPage, goToPage } = usePagination();
+  const { data: articles, isLoading } = useFetchArticles(
+    currentPage,
+    TOTAL_PAGE
+  );
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -25,6 +33,16 @@ export default function ArticlePage() {
             <ArticleCard key={article.articleId} article={article} />
           ))}
       </div>
+
+      {articles?.items && articles.items.length > 0 && (
+        <ArticlePagination
+          currentPage={currentPage}
+          totalPages={Math.ceil((articles.pagination?.total || 0) / TOTAL_PAGE)}
+          onNextPage={nextPage}
+          onPrevPage={prevPage}
+          onPageChange={goToPage}
+        />
+      )}
     </div>
   );
 }
