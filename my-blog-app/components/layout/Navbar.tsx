@@ -73,11 +73,11 @@ const Navbar = ({
           isMenuOpen ? "flex" : "hidden"
         } md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 absolute md:static top-16 left-0 right-0 bg-white md:bg-transparent p-4 md:p-0 z-10`}
       >
+        <Link href="/" className="md:hidden" onClick={closeMenu}>
+          Articles
+        </Link>
         {isAuthenticated ? (
           <>
-            <Link href="/" className="md:hidden" onClick={closeMenu}>
-              Articles
-            </Link>
             <Link href="/admin" onClick={closeMenu}>
               My Articles
             </Link>
